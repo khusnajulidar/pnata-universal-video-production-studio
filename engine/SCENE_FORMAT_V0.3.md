@@ -1,6 +1,6 @@
-# Scene Project Format v0.3 — Milestone A
+# Scene Project Format v0.3 — Milestones A and B
 
-This manifest is validated metadata only. It does not mean v0.3 rendering, layout, or audio mixing is implemented.
+The v0.3 manifest is validated metadata. Milestone B adds reusable Pillow layout primitives; it does not yet provide a complete v0.3 video renderer.
 
 ## Project
 Required: `version: "0.3"`, title, canvas width/height, fps, duration, policy, assets, scenes. Optional audio_tracks defaults to empty.
@@ -13,6 +13,20 @@ Each asset has a unique id, project-relative path, media_type, source, rights_st
 
 ## Scenes and layers
 Scenes have unique IDs, positive duration, visual_reviewed_policy_compliant=true, and layers. Layer times are seconds relative to the scene. Text requires text, box dimensions, and font size. Images reference declared image assets and choose contain/cover/stretch. Keyframes are limited to x/y/scale/opacity/rotation.
+
+## Typography layout primitives — Milestone B
+`pnata_engine.layout_v3.layout_text` calculates wrapped lines, horizontal and vertical alignment, line spacing, padding, and explicit overflow handling:
+- `error`: fail when content does not fit (default).
+- `clip`: return only visible lines and mark the layout as clipped.
+- `shrink_to_fit`: reduce font size only down to the required `min_font_size`; otherwise fail.
+Font paths are tried in declared order. If none resolve, Pillow's default font is used. The caller should provide reviewed/licensed font assets and paths.
+
+`draw_text_layout` draws the measured layout. `fit_image` implements:
+- `contain`: preserves the complete image and adds transparent padding.
+- `cover`: fills the target box and crops deterministically using normalized anchor coordinates.
+- `stretch`: changes aspect ratio only when explicitly requested.
+
+These are layout primitives, not visual review or policy certification. Complex shaping, advanced typographic composition, automatic font discovery, and text-to-speech are not included.
 
 ## Audio
 Tracks reference declared audio assets and require category, timing, gain, and reviewed_non_musical=true. Music, unknown categories, unreviewed audio, embedded audio, and looping are rejected.
