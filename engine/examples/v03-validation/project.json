@@ -1,0 +1,38 @@
+{
+  "version": "0.3",
+  "title": "P'Nata v0.3 validation starter",
+  "width": 720,
+  "height": 1280,
+  "fps": 24,
+  "duration": 2,
+  "background": "#101820",
+  "policy": {
+    "music": "forbidden",
+    "complete_living_beings": "forbidden",
+    "unseen_depictions": "forbidden"
+  },
+  "assets": [],
+  "scenes": [
+    {
+      "id": "opening",
+      "duration": 2,
+      "visual_reviewed_policy_compliant": true,
+      "layers": [
+        {
+          "id": "title",
+          "type": "text",
+          "start": 0,
+          "end": 2,
+          "text": "P'Nata Engine v0.3",
+          "width": 0.8,
+          "height": 0.2,
+          "font_size": 40,
+          "horizontal_align": "center",
+          "vertical_align": "middle",
+          "overflow": "error"
+        }
+      ]
+    }
+  ],
+  "audio_tracks": []
+}
