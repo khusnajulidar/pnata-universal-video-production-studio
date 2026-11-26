@@ -1,0 +1,17 @@
+{
+  "title": "P'Nata Engine Smoke Test",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "crf": 20,
+  "policy": {"music": "forbidden", "complete_living_beings": "forbidden"},
+  "scenes": [
+    {"duration": 2, "background": "#101820", "title": "P'Nata Video Engine",
+     "text": "Uji render awal. Tanpa musik. Tanpa figur makhluk bernyawa secara utuh.",
+     "title_size": 66, "text_size": 38, "text_y": 0.38},
+    {"duration": 2, "background": "#203A43", "title": "Fondasi Produksi",
+     "text": "Konfigurasi · Scene · Render · Pemeriksaan kualitas",
+     "title_size": 58, "text_size": 34, "text_y": 0.4}
+  ],
+  "audio": []
+}
