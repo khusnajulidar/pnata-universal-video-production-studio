@@ -1,0 +1,479 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pnata.example/schemas/scene-project-v0.3.schema.json",
+  "title": "P'Nata Scene Project v0.3",
+  "type": "object",
+  "required": [
+    "version",
+    "title",
+    "width",
+    "height",
+    "fps",
+    "duration",
+    "policy",
+    "assets",
+    "scenes"
+  ],
+  "properties": {
+    "version": {
+      "const": "0.3"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "width": {
+      "type": "integer",
+      "minimum": 16
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 16
+    },
+    "fps": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 120
+    },
+    "duration": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "background": {
+      "type": "string"
+    },
+    "crf": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 51
+    },
+    "preset": {
+      "type": "string"
+    },
+    "policy": {
+      "type": "object",
+      "required": [
+        "music",
+        "complete_living_beings",
+        "unseen_depictions"
+      ],
+      "properties": {
+        "music": {
+          "const": "forbidden"
+        },
+        "complete_living_beings": {
+          "const": "forbidden"
+        },
+        "unseen_depictions": {
+          "const": "forbidden"
+        }
+      },
+      "additionalProperties": false
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/asset"
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/scene"
+      }
+    },
+    "audio_tracks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/audioTrack"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "asset": {
+      "type": "object",
+      "required": [
+        "id",
+        "path",
+        "media_type",
+        "source",
+        "rights_status",
+        "policy_reviewed"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "media_type": {
+          "enum": [
+            "image",
+            "audio",
+            "video",
+            "font"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rights_status": {
+          "const": "cleared"
+        },
+        "policy_reviewed": {
+          "const": true
+        },
+        "contains_embedded_audio": {
+          "const": false
+        },
+        "audio_category": {
+          "enum": [
+            "narration",
+            "sfx",
+            "natural_ambience"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "media_type": {
+                "const": "audio"
+              }
+            },
+            "required": [
+              "media_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "audio_category"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "keyframe": {
+      "type": "object",
+      "required": [
+        "time",
+        "value"
+      ],
+      "properties": {
+        "time": {
+          "type": "number",
+          "minimum": 0
+        },
+        "value": {
+          "type": "number"
+        },
+        "ease": {
+          "enum": [
+            "linear",
+            "ease_in",
+            "ease_out",
+            "ease_in_out"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "layer": {
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "start",
+        "end"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "enum": [
+            "text",
+            "rect",
+            "ellipse",
+            "line",
+            "image"
+          ]
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "text": {
+          "type": "string"
+        },
+        "asset_id": {
+          "type": "string"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "height": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "font_size": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "font_asset_id": {
+          "type": "string"
+        },
+        "font_fallback_asset_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "horizontal_align": {
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ]
+        },
+        "vertical_align": {
+          "enum": [
+            "top",
+            "middle",
+            "bottom"
+          ]
+        },
+        "line_spacing": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "padding": {
+          "type": "number",
+          "minimum": 0
+        },
+        "overflow": {
+          "enum": [
+            "error",
+            "clip",
+            "shrink_to_fit"
+          ]
+        },
+        "min_font_size": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "fit": {
+          "enum": [
+            "contain",
+            "cover",
+            "stretch"
+          ]
+        },
+        "crop_anchor_x": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "crop_anchor_y": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "scale": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "rotation": {
+          "type": "number"
+        },
+        "keyframes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/keyframe"
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "text"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "required": [
+              "text",
+              "width",
+              "height",
+              "font_size"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "image"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "required": [
+              "asset_id",
+              "width",
+              "height",
+              "fit"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "scene": {
+      "type": "object",
+      "required": [
+        "id",
+        "duration",
+        "visual_reviewed_policy_compliant",
+        "layers"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "duration": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "background": {
+          "type": "string"
+        },
+        "visual_reviewed_policy_compliant": {
+          "const": true
+        },
+        "transition_in": {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "cut",
+                "dissolve"
+              ]
+            },
+            "duration": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/layer"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "audioTrack": {
+      "type": "object",
+      "required": [
+        "id",
+        "asset_id",
+        "category",
+        "start",
+        "duration",
+        "gain_db",
+        "reviewed_non_musical"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "asset_id": {
+          "type": "string"
+        },
+        "category": {
+          "enum": [
+            "narration",
+            "sfx",
+            "natural_ambience"
+          ]
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "in_point": {
+          "type": "number",
+          "minimum": 0
+        },
+        "duration": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "gain_db": {
+          "type": "number",
+          "minimum": -60,
+          "maximum": 12
+        },
+        "fade_in": {
+          "type": "number",
+          "minimum": 0
+        },
+        "fade_out": {
+          "type": "number",
+          "minimum": 0
+        },
+        "reviewed_non_musical": {
+          "const": true
+        },
+        "loop": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
