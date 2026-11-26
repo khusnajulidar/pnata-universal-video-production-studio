@@ -27,6 +27,9 @@ jobs:
       - name: Run engine tests
         working-directory: engine
         run: pytest -q
+      - name: Validate v0.3 starter project
+        working-directory: engine
+        run: pnata-validate-v3 examples/v03-validation/project.json
       - name: Render v0.2 smoke fixture
         working-directory: engine
         run: |
