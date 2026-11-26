@@ -57,6 +57,13 @@ Pilih pendekatan yang cocok, tidak memaksa semua proyek menjadi motion graphics:
 
 Format, rasio, resolusi, frame rate, dan durasi fleksibel mengikuti brief/platform. Jangan mewarisi batas 60 detik atau orientasi landscape dari skill lain tanpa alasan.
 
+## Pemilihan backend dan batas kemampuan
+- Sebelum produksi, inventarisasi runtime dan petakan kebutuhan setiap profil ke kemampuan backend yang benar-benar tersedia.
+- Engine v0.1: tipografi/still dengan hard cut; dapat mencampur audio yang sudah melalui gate review.
+- Engine v0.2: compositor 2D berbasis Pillow/FFmpeg dengan layer teks/geometri/still, keyframe x/y/scale/opacity/rotation, easing dasar, serta cut/dissolve. Renderer v0.2 silent-only.
+- Jangan menganggap backend v0.2 sebagai editor nonlinear, renderer 3D, editor footage dokumenter, atau sistem motion kompleks. Untuk kebutuhan di luar batasnya, pilih backend lain yang telah diverifikasi atau ungkapkan keterbatasan; jangan mereduksi brief diam-diam.
+- Human visual-review flags adalah deklarasi proses, bukan deteksi otomatis atau sertifikasi kepatuhan. Periksa frame hasil render secara visual.
+
 ## Alur kerja otomatis
 1. **Brief & continuity:** pahami tujuan, audiens, platform, pesan, CTA, batasan; cari proyek, file, keputusan, dan aset sebelumnya bila tersedia. Jangan mengulang hasil final.
 2. **Research & fact check:** verifikasi klaim faktual/terkini/agama; catat sumber; bedakan fakta, opini, dan interpretasi.
