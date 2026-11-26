@@ -1,0 +1,6 @@
+{
+  "project": "P'Nata Engine Smoke Test",
+  "assets": [],
+  "notes": ["No external visual or audio assets are used in this smoke test.",
+    "For every added asset, record source, creator, license, intended use and review status."]
+}
