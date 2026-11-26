@@ -1,6 +1,6 @@
-# P'Nata Video Engine — v0.1 baseline, v0.2 renderer, v0.3 validation
+# P'Nata Video Engine — v0.1 baseline, v0.2 renderer, v0.3 validation/layout
 
-The engine keeps separate, explicit execution paths. v0.1 and v0.2 remain available; v0.3 currently adds project/schema/policy validation only.
+The engine keeps separate, explicit execution paths. v0.1 and v0.2 remain available; v0.3 currently adds strict project validation and reusable typography/image layout primitives.
 
 ## v0.1 baseline renderer
 - Typography/still scenes with hard cuts.
@@ -15,13 +15,22 @@ The engine keeps separate, explicit execution paths. v0.1 and v0.2 remain availa
 - Command: `pnata-render-v2`.
 - Silent-only; it does not mix audio.
 
-## v0.3 project validation — Milestone A
+## v0.3 validation — Milestone A
 - JSON Schema 2020-12 manifest and strict Python validator.
 - Checks required policy declarations, asset provenance/rights/review declarations, file existence and project-relative path safety.
 - Rejects unclassified or prohibited audio categories, embedded audio in visual assets, and unreviewed audio tracks.
 - Checks scene/layer timing, references, keyframe properties, and basic audio-track timing.
 - Command: `pnata-validate-v3`.
-- **Validation only:** no v0.3 renderer, typography compositor, timeline renderer, audio mixer, or QC pipeline is claimed yet.
+- Validation does not render.
+
+## v0.3 layout primitives — Milestone B (verification pending)
+- `pnata_engine.layout_v3.layout_text`: text wrapping, paragraph breaks, horizontal/vertical alignment, line spacing, padding, and explicit overflow modes.
+- Overflow modes: `error`, `clip` (reports clipping), and `shrink_to_fit` (requires a minimum font size).
+- Font lookup follows caller-supplied paths and falls back to Pillow's default font.
+- `draw_text_layout`: draws a measured text layout.
+- `fit_image`: deterministic `contain`, `cover` with normalized crop anchor, and explicit `stretch`.
+- Tests: `tests/test_layout_v3.py`.
+- These are primitives only; a complete v0.3 scene renderer has not yet been integrated.
 
 ## Install
 Python 3.10+, Pillow, and FFmpeg are needed for rendering. FFprobe is recommended. JSON Schema validation is included in the validation extra.
@@ -40,7 +49,7 @@ pytest -q
 
 ## Scene formats
 - [v0.2 format](SCENE_FORMAT_V0.2.md) and [v0.2 schema](schema/scene-project-v0.2.schema.json).
-- [v0.3 Milestone A format](SCENE_FORMAT_V0.3.md) and [v0.3 schema](schema/scene-project-v0.3.schema.json).
+- [v0.3 Milestones A–B format](SCENE_FORMAT_V0.3.md) and [v0.3 schema](schema/scene-project-v0.3.schema.json).
 - [v0.3 implementation specification](V0.3_SPEC.md).
 
 ## Backend boundaries
