@@ -9,3 +9,7 @@ Data flow: project JSON → structural loader → policy gates → Pillow scene 
 - `capabilities.py`: conservative runtime inventory.
 
 v0.1 does not implement keyframed animation, transitions, subtitles, nested compositions, multitrack visual compositing, semantic music detection, or automated certification of visual compliance. Those are later milestones, not assumed capabilities.
+
+
+## Universal profile integration
+The engine is a shared execution core, not a universal aesthetic. Creative profiles select craft requirements and backend capabilities. The current v0.1 renderer only supports still/typographic scenes with hard cuts. Do not use it as a proxy for full cinematic, documentary, or advanced motion-graphics capability. Unsupported scene instructions must be reported, not silently ignored. See profiles/ and engine/PROFILE-INTEGRATION.md.
