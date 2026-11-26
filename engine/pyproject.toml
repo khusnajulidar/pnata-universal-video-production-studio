@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pnata-video-engine"
+version = "0.1.0"
+description = "Policy-aware FFmpeg starter engine for P'Nata"
+requires-python = ">=3.10"
+dependencies = ["Pillow>=10"]
+
+[project.optional-dependencies]
+validation = ["jsonschema>=4.20", "pytest>=8"]
+
+[project.scripts]
+pnata-render = "pnata_engine.cli:main"
+pnata-capabilities = "pnata_engine.capabilities_cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pnata_engine*"]
