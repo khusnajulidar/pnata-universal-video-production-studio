@@ -1,0 +1,38 @@
+{
+  "title": "P'Nata v0.2 Abstract Motion Fixture",
+  "width": 720,
+  "height": 1280,
+  "fps": 24,
+  "duration": 6,
+  "crf": 22,
+  "policy": {"music": "forbidden", "complete_living_beings": "forbidden"},
+  "scenes": [
+    {
+      "duration": 3,
+      "background": "#101820",
+      "visual_reviewed_policy_compliant": true,
+      "layers": [
+        {"type":"rect","x":0.5,"y":0.53,"width":0.7,"height":0.018,"color":"#5CC8BE",
+         "keyframes":{"scale":[{"time":0,"value":0.05,"ease":"ease_out"},{"time":2.4,"value":1}] }},
+        {"type":"text","text":"GAGASAN MENJADI GERAK","x":0.5,"y":0.43,"width":0.9,"height":0.12,
+         "font_size":38,"color":"#FFFFFF",
+         "keyframes":{"opacity":[{"time":0,"value":0},{"time":0.5,"value":1}],
+                      "y":[{"time":0,"value":0.48},{"time":1.1,"value":0.43,"ease":"ease_out"}]}}
+      ]
+    },
+    {
+      "duration": 3,
+      "transition_in":{"type":"dissolve","duration":0.6},
+      "background":"#203A43",
+      "visual_reviewed_policy_compliant":true,
+      "layers":[
+        {"type":"ellipse","x":0.5,"y":0.53,"width":0.24,"height":0.24,"color":"#F2B66D",
+         "keyframes":{"scale":[{"time":0,"value":0.2},{"time":1.5,"value":1.1,"ease":"ease_out"},{"time":2.8,"value":0.9,"ease":"ease_in_out"}],
+                      "rotation":[{"time":0,"value":0},{"time":2.8,"value":90}]}},
+        {"type":"text","text":"CERITA · VISUAL · WAKTU","x":0.5,"y":0.76,"width":0.9,"height":0.1,
+         "font_size":30,"color":"#FFFFFF","keyframes":{"opacity":[{"time":0.2,"value":0},{"time":1,"value":1}]}}
+      ]
+    }
+  ],
+  "audio": []
+}
