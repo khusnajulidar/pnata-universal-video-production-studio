@@ -1,0 +1,246 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pnata.example/schemas/scene-project-v0.2.schema.json",
+  "title": "P'Nata Scene Project v0.2",
+  "type": "object",
+  "required": [
+    "title",
+    "width",
+    "height",
+    "fps",
+    "duration",
+    "scenes",
+    "policy"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "width": {
+      "type": "integer",
+      "minimum": 16
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 16
+    },
+    "fps": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 120
+    },
+    "duration": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "crf": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 51
+    },
+    "preset": {
+      "type": "string"
+    },
+    "font": {
+      "type": "string"
+    },
+    "policy": {
+      "type": "object",
+      "required": [
+        "music",
+        "complete_living_beings"
+      ],
+      "properties": {
+        "music": {
+          "const": "forbidden"
+        },
+        "complete_living_beings": {
+          "const": "forbidden"
+        }
+      },
+      "additionalProperties": false
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/scene"
+      }
+    },
+    "audio": {
+      "type": "array",
+      "maxItems": 0
+    }
+  },
+  "$defs": {
+    "keyframe": {
+      "type": "object",
+      "required": [
+        "time",
+        "value"
+      ],
+      "properties": {
+        "time": {
+          "type": "number",
+          "minimum": 0
+        },
+        "value": {
+          "type": "number"
+        },
+        "ease": {
+          "enum": [
+            "linear",
+            "ease_in",
+            "ease_out",
+            "ease_in_out"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "layer": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "text",
+            "rect",
+            "ellipse",
+            "line",
+            "image"
+          ]
+        },
+        "text": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "height": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "scale": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "rotation": {
+          "type": "number"
+        },
+        "color": {
+          "type": "string"
+        },
+        "font_size": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "radius": {
+          "type": "number",
+          "minimum": 0
+        },
+        "keyframes": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/keyframe"
+              }
+            },
+            "y": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/keyframe"
+              }
+            },
+            "scale": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/keyframe"
+              }
+            },
+            "opacity": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/keyframe"
+              }
+            },
+            "rotation": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/keyframe"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "asset_reviewed_policy_compliant": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "scene": {
+      "type": "object",
+      "required": [
+        "duration",
+        "visual_reviewed_policy_compliant",
+        "layers"
+      ],
+      "properties": {
+        "duration": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "background": {
+          "type": "string"
+        },
+        "visual_reviewed_policy_compliant": {
+          "const": true
+        },
+        "transition_in": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "cut",
+                "dissolve"
+              ]
+            },
+            "duration": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/layer"
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}
