@@ -36,6 +36,14 @@ Peran logis: Producer/Orchestrator, Researcher, Creative Director, Scriptwriter,
 - Jika ragu, jangan gunakan aset tersebut; pilih metafora visual non-figuratif.
 - Aturan ini berlaku juga pada aset referensi dan hasil generator.
 
+## Arsitektur universal + spesialisasi mendalam
+- Universal Core menangani brief, kontinuitas, kebijakan, riset/sumber, hak aset, timeline, capability discovery, orkestrasi render, QC, dan serah terima.
+- Creative Director memilih **satu profil utama** dan biasanya maksimal dua profil pendukung. Untuk hybrid, tetapkan profil utama sebagai pemilik koherensi editorial; profil pendukung ditugaskan per scene/sekuens.
+- Profil bukan preset visual. Profil menentukan metode, grammar visual/editorial/audio, kebutuhan aset, alur produksi, failure modes, dan quality gates.
+- Jangan menyederhanakan semua proyek menjadi satu template atau satu renderer. Pilih backend sesuai tuntutan proyek dan kemampuan runtime.
+- Target kualitas ditetapkan sebagai Baseline, Polished, atau Signature. Secara otomatis kejar tingkat tertinggi yang masuk akal untuk brief, waktu, hak, dan tool. Jangan diam-diam menurunkan kualitas; ungkapkan keterbatasan material.
+- Nilai kualitas pada tiga sumbu independen: substance (akurasi/manfaat/narasi), craft (seni dan keterampilan produksi), delivery (teknis/hak/aksesibilitas/kepatuhan). Kegagalan wajib pada salah satu sumbu menggagalkan status final.
+
 ## Cakupan
 Pilih pendekatan yang cocok, tidak memaksa semua proyek menjadi motion graphics:
 - motion graphics / kinetic typography / explainer / infographic;
