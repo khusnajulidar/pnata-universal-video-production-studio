@@ -21,7 +21,7 @@ def fixture(tmp_path):
                          "x": .5, "y": .5, "width": .8, "height": .5, "font_size": 20,
                          "overflow": "shrink_to_fit", "min_font_size": 12}],
              "captions": [{"id": "caption", "start": 0, "end": 1, "text": "Test caption",
-                           "x": .1, "y": .75, "width": .8, "height": .15, "font_size": 12}]},
+                           "x": .1, "y": .70, "width": .8, "height": .25, "font_size": 12}]},
             {"id": "two", "duration": 1, "visual_reviewed_policy_compliant": True, "background": "#203040",
              "transition_in": {"type": "dissolve", "duration": .25},
              "layers": [{"id": "shape", "type": "ellipse", "start": 0, "end": 1,
