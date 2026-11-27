@@ -4,7 +4,7 @@ from pnata_engine.layout_v3 import LayoutV3Error, layout_text, draw_text_layout,
 
 def test_text_wraps_and_aligns():
     text = "This heading is deliberately much longer so it must wrap across multiple lines"
-    layout = layout_text(text, (0, 0, 120, 180), 18,
+    layout = layout_text(text, (0, 0, 120, 300), 18,
                          horizontal_align="center", vertical_align="middle")
     assert len(layout.lines) > 1
     assert " ".join(layout.lines) == text
