@@ -24,15 +24,26 @@ class TextLayout:
     clipped: bool = False
 
 def _load_font(font_size, font_paths=()):
+    """Load a scalable font consistently across Windows and Linux.
+
+    Explicit project fonts win. Arial/DejaVu are deterministic platform
+    fallbacks; Pillow's bitmap default is only the final emergency fallback.
+    """
     size = max(1, int(font_size))
-    for candidate in font_paths:
-        if candidate and Path(candidate).is_file():
+    candidates = list(font_paths)
+    candidates.extend([
+        "C:/Windows/Fonts/arial.ttf",
+        "C:/Windows/Fonts/Arial.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf",
+        "DejaVuSans.ttf",
+    ])
+    for candidate in candidates:
+        if candidate and (Path(candidate).is_file() or str(candidate).lower().endswith(".ttf")):
             try:
                 return ImageFont.truetype(str(candidate), size=size)
             except OSError:
                 continue
-    # Pillow's default bitmap font historically ignored the requested size.
-    # Use its scalable built-in Aileron/FreeType fallback where supported.
     try:
         return ImageFont.load_default(size=size)
     except TypeError:
@@ -101,7 +112,12 @@ def layout_text(text, box, font_size, font_paths=(), horizontal_align="left",
     chosen = None
     for size in sizes:
         font = _load_font(size, font_paths)
-        lines = _wrap_text(text, font, available_w, draw, int(stroke_width))
+        try:
+            lines = _wrap_text(text, font, available_w, draw, int(stroke_width))
+        except LayoutV3Error:
+            if overflow == "shrink_to_fit":
+                continue
+            raise
         ascent, descent = font.getmetrics()
         line_height = max(1, int((ascent + descent) * float(line_spacing)))
         fits = len(lines) * line_height <= available_h
