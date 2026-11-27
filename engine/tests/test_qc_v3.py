@@ -40,3 +40,11 @@ def test_unknown_review_value_is_pending():
  reviews={k:"pass" for k in REQUIRED_REVIEWS}; reviews["visual_policy"]="approved"
  r=release_gate({"technical_status":"pass"},reviews)
  assert not r["release_ready"] and "visual_policy" in r["pending_reviews"]
+
+def test_unspecified_audio_presence_is_incomplete_not_release_pass(tmp_path):
+    p=tmp_path/"v.mp4"; make_video(p)
+    assert technical_qc(p,spec())["technical_status"]=="incomplete"
+def test_optional_codec_expectation_is_checked(tmp_path):
+    p=tmp_path/"v.mp4"; make_video(p)
+    project=spec(); project["video_codec"]="mpeg4"
+    assert technical_qc(p,project,expect_audio=False)["technical_status"]=="fail"

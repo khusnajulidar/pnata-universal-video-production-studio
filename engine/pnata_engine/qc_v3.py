@@ -44,9 +44,15 @@ def technical_qc(media_path,project,ffprobe=None,expect_audio=None,duration_tole
  add("duration",actual is not None and abs(actual-target)<=duration_tolerance,actual,target,f"Tolerance ±{duration_tolerance:.3f}s.")
  if expect_audio is None: checks.append({"name":"audio_stream_presence","status":"not_checked","actual":probe["audio_stream_count"],"expected":"unspecified","detail":"Specify expected audio presence for release QC."})
  else:
-  present=probe["audio_stream_count"]>0; add("audio_stream_presence",present is bool(expect_audio),present,bool(expect_audio))
- passed=all(c["status"]=="pass" for c in checks if c["status"]!="not_checked")
- return {"report_version":"1.0","created_at":datetime.now(timezone.utc).isoformat(),"technical_status":"pass" if passed else "fail","probe":probe,"checks":checks,
+  present=probe["audio_stream_count"]>0; add("audio_stream_presence",probe["audio_stream_count"]==(1 if expect_audio else 0),probe["audio_stream_count"],1 if expect_audio else 0)
+  if expect_audio and project.get("audio_codec"):
+   actual_codec=probe["audio"][0]["codec"] if probe["audio"] else None
+   add("audio_codec",actual_codec==project["audio_codec"],actual_codec,project["audio_codec"])
+ statuses=[c["status"] for c in checks]
+ passed=all(s=="pass" for s in statuses)
+ incomplete=any(s=="not_checked" for s in statuses)
+ technical_status="pass" if passed else "incomplete" if incomplete else "fail"
+ return {"report_version":"1.0","created_at":datetime.now(timezone.utc).isoformat(),"technical_status":technical_status,"probe":probe,"checks":checks,
  "limitations":["No semantic music detection.","No visual content or living-being policy certification.","No rights verification.","No loudness/true-peak certification.","Technical QC cannot replace full human playback review."]}
 def release_gate(technical_report,human_reviews):
  reviews={}
