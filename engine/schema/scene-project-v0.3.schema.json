@@ -345,6 +345,31 @@
               "$ref": "#/$defs/keyframe"
             }
           }
+        },
+        "color": {
+          "type": "string"
+        },
+        "outline": {
+          "type": "string"
+        },
+        "outline_width": {
+          "type": "number",
+          "minimum": 0
+        },
+        "radius": {
+          "type": "number",
+          "minimum": 0
+        },
+        "line_width": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "stroke_width": {
+          "type": "number",
+          "minimum": 0
+        },
+        "stroke_color": {
+          "type": "string"
         }
       },
       "allOf": [
@@ -567,6 +592,9 @@
             "center",
             "right"
           ]
+        },
+        "color": {
+          "type": "string"
         }
       },
       "additionalProperties": false

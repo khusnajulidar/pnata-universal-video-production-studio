@@ -73,23 +73,26 @@ def render_video_v3(project_path, output_path, ffmpeg=None):
     windows=scene_windows(project); assets={a["id"]:a for a in project["assets"]}; fonts=_font_paths(project,root)
     target_frames=max(1,round(float(project["duration"])*fps))
     with tempfile.TemporaryDirectory(prefix="pnata_v03_") as td:
-        frames=Path(td)/"frames"; frames.mkdir(); previous=None
+        frames=Path(td)/"frames"; frames.mkdir(); previous=None; transition_reference=None; active_scene_id=None
         for frame in range(target_frames):
             now=frame/fps
             pair=next(((win,scene) for win,scene in zip(windows,project["scenes"]) if win.start<=now<win.end),None)
             if pair is None: raise RenderV3Error(f"Timeline does not cover frame at {now:.4f}s.")
             win,scene=pair; local=now-win.start
+            if scene["id"] != active_scene_id:
+                transition_reference=previous.copy() if previous is not None else None
+                active_scene_id=scene["id"]
             canvas=Image.new("RGBA",(width,height),scene.get("background",project.get("background","#101820")))
             for layer in scene.get("layers",[]):
                 if float(layer["start"])<=local<float(layer["end"]):
                     _render_layer(canvas,layer,local,root,assets,fonts)
             _render_captions(canvas,scene,local,fonts)
             transition=scene.get("transition_in",{"type":"cut"})
-            if previous is not None and transition.get("type")=="dissolve":
+            if transition_reference is not None and transition.get("type")=="dissolve":
                 count=max(1,round(float(transition.get("duration",0))*fps))
                 scene_frame=frame-round(win.start*fps)
                 if scene_frame<count:
-                    canvas=Image.blend(previous,canvas,min(1,(scene_frame+1)/count))
+                    canvas=Image.blend(transition_reference,canvas,min(1,(scene_frame+1)/count))
             previous=canvas.copy()
             canvas.convert("RGB").save(frames/f"frame_{frame:08d}.png")
         cmd=[binary,"-hide_banner","-loglevel","error","-y","-framerate",str(fps),"-i",str(frames/"frame_%08d.png"),
