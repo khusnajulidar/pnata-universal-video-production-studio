@@ -3,9 +3,11 @@ from PIL import Image
 from pnata_engine.layout_v3 import LayoutV3Error, layout_text, draw_text_layout, fit_image
 
 def test_text_wraps_and_aligns():
-    layout = layout_text("A short heading that wraps", (0, 0, 130, 100), 18,
+    text = "This heading is deliberately much longer so it must wrap across multiple lines"
+    layout = layout_text(text, (0, 0, 80, 120), 18,
                          horizontal_align="center", vertical_align="middle")
     assert len(layout.lines) > 1
+    assert " ".join(layout.lines) == text
     assert layout.align == "center"
     assert layout.y > 0
 
