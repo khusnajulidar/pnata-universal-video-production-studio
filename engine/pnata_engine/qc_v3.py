@@ -38,6 +38,7 @@ def technical_qc(media_path,project,ffprobe=None,expect_audio=None,duration_tole
  if v:
   add("width",v["width"]==project["width"],v["width"],project["width"]); add("height",v["height"]==project["height"],v["height"],project["height"])
   fps=v["frame_rate"]; target=float(project["fps"]); add("frame_rate",fps is not None and abs(fps-target)<=fps_tolerance,fps,target)
+  if project.get("video_codec"): add("video_codec",v.get("codec")==project["video_codec"],v.get("codec"),project["video_codec"])
  else:
   add("width",False,None,project["width"],"No video stream."); add("height",False,None,project["height"],"No video stream."); add("frame_rate",False,None,project["fps"],"No video stream.")
  target=_number(project["duration"],"project duration"); actual=probe["duration_seconds"]
