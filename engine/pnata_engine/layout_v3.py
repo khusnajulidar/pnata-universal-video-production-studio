@@ -24,13 +24,19 @@ class TextLayout:
     clipped: bool = False
 
 def _load_font(font_size, font_paths=()):
+    size = max(1, int(font_size))
     for candidate in font_paths:
         if candidate and Path(candidate).is_file():
             try:
-                return ImageFont.truetype(str(candidate), size=max(1, int(font_size)))
+                return ImageFont.truetype(str(candidate), size=size)
             except OSError:
                 continue
-    return ImageFont.load_default()
+    # Pillow's default bitmap font historically ignored the requested size.
+    # Use its scalable built-in Aileron/FreeType fallback where supported.
+    try:
+        return ImageFont.load_default(size=size)
+    except TypeError:
+        return ImageFont.load_default()
 
 def _text_width(draw, text, font, stroke_width=0):
     if not text:
