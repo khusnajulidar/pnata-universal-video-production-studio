@@ -35,3 +35,20 @@ def test_pipeline_release_requires_all_reviews(tmp_path):
  reviews={k:"pass" for k in REQUIRED_REVIEWS}
  report=produce_project(path,out,reviews=reviews)
  assert report["release_gate"]["release_ready"] is True
+
+def test_pipeline_mixes_and_muxes_reviewed_narration(tmp_path):
+    import wave
+    path=fixture(tmp_path)
+    source=tmp_path/"voice.wav"
+    with wave.open(str(source),"wb") as wav:
+        wav.setnchannels(1); wav.setsampwidth(2); wav.setframerate(48000)
+        wav.writeframes(b"\x00\x00"*96000)
+    project=json.loads(path.read_text(encoding="utf-8"))
+    project["assets"]=[{"id":"voice","path":"voice.wav","media_type":"audio","source":"synthetic test tone silence","rights_status":"cleared","policy_reviewed":True,"audio_category":"narration"}]
+    project["audio_tracks"]=[{"id":"narration","asset_id":"voice","category":"narration","start":0.1,"in_point":0,"duration":1.5,"gain_db":-6,"reviewed_non_musical":True,"loop":False}]
+    path.write_text(json.dumps(project),encoding="utf-8")
+    reviews={k:"pass" for k in REQUIRED_REVIEWS}
+    report=produce_project(path,tmp_path/"with-audio.mp4",reviews=reviews)
+    assert report["technical_qc"]["technical_status"]=="pass"
+    assert report["technical_qc"]["probe"]["audio_stream_count"]==1
+    assert report["release_gate"]["release_ready"] is True

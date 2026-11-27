@@ -30,6 +30,9 @@ jobs:
       - name: Validate v0.3 starter project
         working-directory: engine
         run: pnata-validate-v3 examples/v03-validation/project.json
+      - name: Run v0.3 end-to-end production smoke fixture
+        working-directory: engine
+        run: pnata-produce-v3 examples/v03-validation/project.json --output dist/v03-e2e.mp4 --reviews examples/v03-validation/reviews-pass.json
       - name: Render v0.2 smoke fixture
         working-directory: engine
         run: |
