@@ -33,8 +33,8 @@ Scenes are sequenced in manifest order. Each scene's duration defines its global
 
 Optional project safe_margins uses normalized fractions (left/right/top/bottom); defaults are 0.05 on every edge. Optional scene captions are timed cues with unique per-scene id, text, normalized x/y/width/height, and font_size. Cues must remain within scene duration and configured safe margins. The module validates and exposes cues; it does not yet render captions or export subtitle files.
 
-## Audio
-Tracks reference declared audio assets and require category, timing, gain, and reviewed_non_musical=true. Music, unknown categories, unreviewed audio, embedded audio, and looping are rejected.
+## Reviewed audio — Milestone D
+Audio assets declare `narration`, `sfx`, or `natural_ambience`, with cleared rights and policy review. Tracks require `reviewed_non_musical=true` (human attestation, not automated semantic detection). Timing fields are project-global seconds: `start`, optional source `in_point`, `duration`, `gain_db` (-60 to +12), optional `fade_in`/`fade_out`, and `loop=false`. FFprobe verifies an audio stream and source duration. The mixer writes 48 kHz stereo PCM WAV, mixes overlaps without automatic loudness normalization, and produces exact-duration silence when no tracks exist. This standalone mix is not yet muxed into v0.3 video output.
 
 ## Validate
 Run from engine/: `pnata-validate-v3 examples/v03-validation/project.json` and `pytest -q`. Validation does not render; human review remains mandatory.

@@ -40,6 +40,12 @@ The engine keeps separate, explicit execution paths. v0.1 and v0.2 remain availa
 - Module: `pnata_engine.timeline_v3`; validator integrates caption/safe-margin checks.
 - Caption rendering and subtitle export are not included yet.
 
+## v0.3 reviewed audio — Milestone D (implementation added; verification pending)
+- Module: `pnata_engine.audio_v3`; narration, genuinely non-musical SFX, and genuinely non-musical natural ambience only.
+- Source trim, timeline offset, gain, fades, deterministic overlap mix, exact-duration silence; FFprobe checks source audio stream and trim bounds.
+- Output: 48 kHz stereo PCM WAV. Standalone mix only; video mux integration is not included.
+- Human review flags are attestations, not a semantic music detector. Ambiguous audio must be excluded.
+
 ## Install
 Python 3.10+, Pillow, and FFmpeg are needed for rendering. FFprobe is recommended. JSON Schema validation is included in the validation extra.
 ```bash
