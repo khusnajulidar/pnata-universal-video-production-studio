@@ -4,7 +4,7 @@ from pnata_engine.layout_v3 import LayoutV3Error, layout_text, draw_text_layout,
 
 def test_text_wraps_and_aligns():
     text = "This heading is deliberately much longer so it must wrap across multiple lines"
-    layout = layout_text(text, (0, 0, 80, 120), 18,
+    layout = layout_text(text, (0, 0, 120, 180), 18,
                          horizontal_align="center", vertical_align="middle")
     assert len(layout.lines) > 1
     assert " ".join(layout.lines) == text
@@ -13,10 +13,10 @@ def test_text_wraps_and_aligns():
 
 def test_overflow_error_is_explicit():
     with pytest.raises(LayoutV3Error, match="exceeds its box"):
-        layout_text("This is a long paragraph that cannot fit", (0, 0, 80, 12), 20)
+        layout_text("This is a long paragraph that cannot fit", (0, 0, 150, 12), 20)
 
 def test_shrink_to_fit_respects_minimum():
-    layout = layout_text("A long but manageable line of text", (0, 0, 100, 45), 24,
+    layout = layout_text("A long but manageable line of text", (0, 0, 180, 45), 24,
                          overflow="shrink_to_fit", min_font_size=8)
     assert 8 <= layout.font_size <= 24
 
