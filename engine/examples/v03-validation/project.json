@@ -1,10 +1,10 @@
 {
   "version": "0.3",
-  "title": "P'Nata v0.3 validation starter",
+  "title": "P'Nata v0.3 animated visual validation",
   "width": 720,
   "height": 1280,
   "fps": 24,
-  "duration": 2,
+  "duration": 6,
   "background": "#101820",
   "policy": {
     "music": "forbidden",
@@ -14,23 +14,23 @@
   "assets": [],
   "scenes": [
     {
-      "id": "opening",
-      "duration": 2,
+      "id": "animated-geometry",
+      "duration": 6,
       "visual_reviewed_policy_compliant": true,
+      "background": "#101820",
       "layers": [
-        {
-          "id": "title",
-          "type": "text",
-          "start": 0,
-          "end": 2,
-          "text": "P'Nata Engine v0.3",
-          "width": 0.8,
-          "height": 0.2,
-          "font_size": 40,
-          "horizontal_align": "center",
-          "vertical_align": "middle",
-          "overflow": "error"
-        }
+        {"id":"top-rule","type":"rect","start":0,"end":6,"x":0.5,"y":0.13,"width":0.72,"height":0.004,"color":"#39B6C8"},
+        {"id":"title","type":"text","start":0,"end":6,"text":"P'NATA ENGINE","x":0.5,"y":0.27,"width":0.9,"height":0.13,"font_size":72,"color":"#F4F7FA","horizontal_align":"center","vertical_align":"middle","overflow":"error"},
+        {"id":"subtitle","type":"text","start":0,"end":6,"text":"MOTION SYSTEM  /  VERSION 0.3","x":0.5,"y":0.37,"width":0.88,"height":0.06,"font_size":27,"color":"#9FB3C8","horizontal_align":"center","vertical_align":"middle","overflow":"error"},
+        {"id":"orbit-line","type":"line","start":0,"end":6,"x":0.5,"y":0.66,"width":0.7,"height":0.01,"line_width":4,"color":"#36515F"},
+        {"id":"moving-orb","type":"ellipse","start":0,"end":6,"width":0.16,"height":0.09,"color":"#39B6C8",
+         "keyframes":{
+           "x":[{"time":0,"value":0.18,"ease":"ease_in_out"},{"time":5.5,"value":0.82,"ease":"ease_in_out"}],
+           "y":[{"time":0,"value":0.66},{"time":2.75,"value":0.58,"ease":"ease_in_out"},{"time":5.5,"value":0.66,"ease":"ease_in_out"}],
+           "scale":[{"time":0,"value":0.75},{"time":2.75,"value":1.25,"ease":"ease_out"},{"time":5.5,"value":0.75}]
+         }},
+        {"id":"lower-block","type":"rect","start":0,"end":6,"x":0.5,"y":0.82,"width":0.58,"height":0.002,"color":"#36515F"},
+        {"id":"footer","type":"text","start":0,"end":6,"text":"ABSTRACT GEOMETRY  •  SILENT TEST RENDER","x":0.5,"y":0.88,"width":0.9,"height":0.05,"font_size":22,"color":"#9FB3C8","horizontal_align":"center","vertical_align":"middle","overflow":"error"}
       ]
     }
   ],
