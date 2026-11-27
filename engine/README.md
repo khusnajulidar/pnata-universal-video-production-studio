@@ -53,6 +53,13 @@ The engine keeps separate, explicit execution paths. v0.1 and v0.2 remain availa
 - CLI: `pnata-qc-v3 output.mp4 --project project.json --output dist/qc.json --expect-no-audio [--reviews reviews.json]`.
 - Technical QC cannot detect music semantically, certify visual policy, verify rights, or replace human playback. Loudness/true-peak analysis is not included.
 
+## v0.3 end-to-end pipeline — Milestone F (implementation added; verification pending)
+- `pnata-render-v3`: validates the manifest and renders supported 2D text/shape/image layers, keyframes, dissolve transitions, and timed captions to silent H.264 video.
+- `pnata-produce-v3`: validates, renders, mixes reviewed audio only when tracks are declared, muxes AAC audio, runs technical QC, and writes a combined JSON report.
+- With no audio tracks, the output remains video-only; no synthetic audio track is added.
+- Release remains blocked until all seven human reviews explicitly pass. The pipeline does not auto-approve rights, religious accuracy, visual compliance, or non-musical audio.
+- Scope: Pillow raster 2D; not a full NLE, footage editor, 3D renderer, or semantic media classifier.
+
 ## Install
 Python 3.10+, Pillow, and FFmpeg are needed for rendering. FFprobe is recommended. JSON Schema validation is included in the validation extra.
 ```bash

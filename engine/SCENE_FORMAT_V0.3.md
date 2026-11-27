@@ -39,5 +39,8 @@ Audio assets declare `narration`, `sfx`, or `natural_ambience`, with cleared rig
 ## QC and release gate — Milestone E
 `pnata-qc-v3` compares rendered media metadata with project dimensions, FPS, and duration. Specify expected audio stream presence using `--expect-audio` or `--expect-no-audio`; otherwise that check remains not checked. The release gate requires all human review fields (`content_accuracy`, `rights_and_provenance`, `visual_policy`, `audio_policy`, `visual_quality`, `audio_quality`, `final_playback`) to explicitly equal `pass`. A pending or failed item blocks release. Technical QC cannot certify audio semantics, visuals, factual correctness, or rights.
 
+## End-to-end production — Milestone F
+`pnata-produce-v3 project.json --output dist/final.mp4 --report dist/qc.json --reviews reviews.json` runs validation, 2D visual/caption rendering, reviewed audio mixing and mux (only when audio tracks exist), technical QC, and the mandatory human release gate. Without complete human approvals, the pipeline can finish rendering and QC but release remains blocked. No audio track is added when the project contains no audio tracks. This renderer supports the declared Pillow/FFmpeg 2D layer types only; it is not a general footage editor or 3D renderer.
+
 ## Validate
 Run from engine/: `pnata-validate-v3 examples/v03-validation/project.json` and `pytest -q`. Validation does not render; human review remains mandatory.
