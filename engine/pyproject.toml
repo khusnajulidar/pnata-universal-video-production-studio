@@ -16,6 +16,7 @@ validation = ["jsonschema>=4.20", "pytest>=8"]
 pnata-render = "pnata_engine.cli:main"
 pnata-render-v2 = "pnata_engine.render_v2_cli:main"
 pnata-validate-v3 = "pnata_engine.validate_v3_cli:main"
+pnata-qc-v3 = "pnata_engine.qc_v3_cli:main"
 pnata-capabilities = "pnata_engine.capabilities_cli:main"
 
 [tool.setuptools.packages.find]

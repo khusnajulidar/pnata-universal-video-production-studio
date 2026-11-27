@@ -36,5 +36,8 @@ Optional project safe_margins uses normalized fractions (left/right/top/bottom);
 ## Reviewed audio — Milestone D
 Audio assets declare `narration`, `sfx`, or `natural_ambience`, with cleared rights and policy review. Tracks require `reviewed_non_musical=true` (human attestation, not automated semantic detection). Timing fields are project-global seconds: `start`, optional source `in_point`, `duration`, `gain_db` (-60 to +12), optional `fade_in`/`fade_out`, and `loop=false`. FFprobe verifies an audio stream and source duration. The mixer writes 48 kHz stereo PCM WAV, mixes overlaps without automatic loudness normalization, and produces exact-duration silence when no tracks exist. This standalone mix is not yet muxed into v0.3 video output.
 
+## QC and release gate — Milestone E
+`pnata-qc-v3` compares rendered media metadata with project dimensions, FPS, and duration. Specify expected audio stream presence using `--expect-audio` or `--expect-no-audio`; otherwise that check remains not checked. The release gate requires all human review fields (`content_accuracy`, `rights_and_provenance`, `visual_policy`, `audio_policy`, `visual_quality`, `audio_quality`, `final_playback`) to explicitly equal `pass`. A pending or failed item blocks release. Technical QC cannot certify audio semantics, visuals, factual correctness, or rights.
+
 ## Validate
 Run from engine/: `pnata-validate-v3 examples/v03-validation/project.json` and `pytest -q`. Validation does not render; human review remains mandatory.

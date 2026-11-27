@@ -46,6 +46,13 @@ The engine keeps separate, explicit execution paths. v0.1 and v0.2 remain availa
 - Output: 48 kHz stereo PCM WAV. Standalone mix only; video mux integration is not included.
 - Human review flags are attestations, not a semantic music detector. Ambiguous audio must be excluded.
 
+## v0.3 technical QC and release gate — Milestone E (implementation added; verification pending)
+- `pnata_engine.qc_v3.probe_media`: FFprobe inventory of video/audio streams, dimensions, frame rate, codecs, sample rate, channels, duration, and file size.
+- `technical_qc`: compares one video stream, dimensions, FPS, container duration, and optional expected audio-stream presence against the project specification.
+- `release_gate`: blocks release unless technical QC passes and all seven human reviews explicitly say `pass` (content accuracy, rights/provenance, visual policy, audio policy, visual quality, audio quality, final playback).
+- CLI: `pnata-qc-v3 output.mp4 --project project.json --output dist/qc.json --expect-no-audio [--reviews reviews.json]`.
+- Technical QC cannot detect music semantically, certify visual policy, verify rights, or replace human playback. Loudness/true-peak analysis is not included.
+
 ## Install
 Python 3.10+, Pillow, and FFmpeg are needed for rendering. FFprobe is recommended. JSON Schema validation is included in the validation extra.
 ```bash
