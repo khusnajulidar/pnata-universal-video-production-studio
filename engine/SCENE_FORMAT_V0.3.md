@@ -1,4 +1,4 @@
-# Scene Project Format v0.3 — Milestones A and B
+# Scene Project Format v0.3 — Milestones A, B, and C
 
 The v0.3 manifest is validated metadata. Milestone B adds reusable Pillow layout primitives; it does not yet provide a complete v0.3 video renderer.
 
@@ -27,6 +27,11 @@ Font paths are tried in declared order. If none resolve, Pillow's default font i
 - `stretch`: changes aspect ratio only when explicitly requested.
 
 These are layout primitives, not visual review or policy certification. Complex shaping, advanced typographic composition, automatic font discovery, and text-to-speech are not included.
+
+## Timeline and captions — Milestone C
+Scenes are sequenced in manifest order. Each scene's duration defines its global time window; transitions do not shorten or overlap these windows. Layer and caption start/end values are scene-local seconds and use half-open visibility intervals [start, end). The timeline helper maps them to project-global time and provides deterministic frame quantization.
+
+Optional project safe_margins uses normalized fractions (left/right/top/bottom); defaults are 0.05 on every edge. Optional scene captions are timed cues with unique per-scene id, text, normalized x/y/width/height, and font_size. Cues must remain within scene duration and configured safe margins. The module validates and exposes cues; it does not yet render captions or export subtitle files.
 
 ## Audio
 Tracks reference declared audio assets and require category, timing, gain, and reviewed_non_musical=true. Music, unknown categories, unreviewed audio, embedded audio, and looping are rejected.

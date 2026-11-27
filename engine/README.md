@@ -1,4 +1,4 @@
-# P'Nata Video Engine — v0.1 baseline, v0.2 renderer, v0.3 validation/layout
+# P'Nata Video Engine — v0.1 baseline, v0.2 renderer, v0.3 validation/layout/timeline
 
 The engine keeps separate, explicit execution paths. v0.1 and v0.2 remain available; v0.3 currently adds strict project validation and reusable typography/image layout primitives.
 
@@ -23,7 +23,7 @@ The engine keeps separate, explicit execution paths. v0.1 and v0.2 remain availa
 - Command: `pnata-validate-v3`.
 - Validation does not render.
 
-## v0.3 layout primitives — Milestone B (verification pending)
+## v0.3 layout primitives — Milestone B (locally verified: 30 tests passed)
 - `pnata_engine.layout_v3.layout_text`: text wrapping, paragraph breaks, horizontal/vertical alignment, line spacing, padding, and explicit overflow modes.
 - Overflow modes: `error`, `clip` (reports clipping), and `shrink_to_fit` (requires a minimum font size).
 - Font lookup follows caller-supplied paths and falls back to Pillow's default font.
@@ -31,6 +31,14 @@ The engine keeps separate, explicit execution paths. v0.1 and v0.2 remain availa
 - `fit_image`: deterministic `contain`, `cover` with normalized crop anchor, and explicit `stretch`.
 - Tests: `tests/test_layout_v3.py`.
 - These are primitives only; a complete v0.3 scene renderer has not yet been integrated.
+
+## v0.3 timeline and captions — Milestone C (implementation added; verification pending)
+- Sequential scene windows mapped to global project time.
+- Half-open layer visibility windows [start, end) and deterministic frame quantization.
+- Per-scene timed caption cues mapped to global time.
+- Configurable normalized safe margins (default 5% on each edge); captions outside the safe area are rejected by validation.
+- Module: `pnata_engine.timeline_v3`; validator integrates caption/safe-margin checks.
+- Caption rendering and subtitle export are not included yet.
 
 ## Install
 Python 3.10+, Pillow, and FFmpeg are needed for rendering. FFprobe is recommended. JSON Schema validation is included in the validation extra.
@@ -49,7 +57,7 @@ pytest -q
 
 ## Scene formats
 - [v0.2 format](SCENE_FORMAT_V0.2.md) and [v0.2 schema](schema/scene-project-v0.2.schema.json).
-- [v0.3 Milestones A–B format](SCENE_FORMAT_V0.3.md) and [v0.3 schema](schema/scene-project-v0.3.schema.json).
+- [v0.3 Milestones A–C format](SCENE_FORMAT_V0.3.md) and [v0.3 schema](schema/scene-project-v0.3.schema.json).
 - [v0.3 implementation specification](V0.3_SPEC.md).
 
 ## Backend boundaries

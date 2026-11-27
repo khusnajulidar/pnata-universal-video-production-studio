@@ -88,6 +88,32 @@
       "items": {
         "$ref": "#/$defs/audioTrack"
       }
+    },
+    "safe_margins": {
+      "type": "object",
+      "properties": {
+        "left": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.45
+        },
+        "right": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.45
+        },
+        "top": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.45
+        },
+        "bottom": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.45
+        }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false,
@@ -412,6 +438,12 @@
           "items": {
             "$ref": "#/$defs/layer"
           }
+        },
+        "captions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/caption"
+          }
         }
       },
       "additionalProperties": false
@@ -471,6 +503,70 @@
         },
         "loop": {
           "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "caption": {
+      "type": "object",
+      "required": [
+        "id",
+        "start",
+        "end",
+        "text",
+        "x",
+        "y",
+        "width",
+        "height",
+        "font_size"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "x": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "y": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1
+        },
+        "height": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1
+        },
+        "font_size": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "horizontal_align": {
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ]
         }
       },
       "additionalProperties": false

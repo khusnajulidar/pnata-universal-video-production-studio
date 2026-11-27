@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 from jsonschema import Draft202012Validator
+from .timeline_v3 import TimelineV3Error, validate_timeline
 
 _SCHEMA_PATH=Path(__file__).resolve().parents[1]/"schema"/"scene-project-v0.3.schema.json"
 class SceneV3Error(ValueError):
@@ -66,4 +67,6 @@ def validate_scene_project(path):
         if t.get("loop",False): raise SceneV3Error(f"Audio looping is not supported in v0.3: {t['id']}.")
         if t["start"]+t["duration"]>project["duration"]+1e-6: raise SceneV3Error(f"Audio track {t['id']} exceeds project duration.")
         if t.get("fade_in",0)+t.get("fade_out",0)>t["duration"]: raise SceneV3Error(f"Audio fades exceed track duration for {t['id']}.")
+    try: validate_timeline(project)
+    except TimelineV3Error as exc: raise SceneV3Error(str(exc)) from exc
     return project,root
